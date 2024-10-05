@@ -6,6 +6,7 @@ public class Pickup : MonoBehaviour
 {
     public GameObject pickupAble; // The item to pick up
     public GameObject pickupText; // The text to display when the player can pick up the item
+    public GameObject panelSuperado; //Panel de victoria
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,7 @@ public class Pickup : MonoBehaviour
             {
                 pickupAble.SetActive(false);
                 pickupText.SetActive(false);
+                panelSuperado.SetActive(true);
             }
         }
     }
