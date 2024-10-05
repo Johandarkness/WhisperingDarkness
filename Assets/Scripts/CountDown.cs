@@ -5,14 +5,17 @@ using TMPro; // Necesario si usas TextMeshPro para mostrar el texto
 
 public class CountDown : MonoBehaviour
 {
-    public float timeInMinutes = 1f;  // El tiempo en minutos
+    public float timeInMinutes = 2f;  // El tiempo en minutos
     private float timeRemaining;      // Tiempo restante en segundos
     public TextMeshProUGUI countdownText;  // Referencia al componente TextMeshProUGUI
-    //public AnotherScript anotherScript;    // Referencia a otro script que llamaremos al llegar a 0
+    public NewBehaviourScript lightController;   // Cambié el tipo a LampsControl para usar el script correcto
 
     void Start()
     {
+         Debug.Log("Tiempo en minutos sas"+timeInMinutes);
         timeRemaining = timeInMinutes * 60;  // Convertir minutos a segundos
+        Debug.Log(timeRemaining = timeInMinutes * 60);
+        Debug.Log("Tiempo inicial: " + timeRemaining);
     }
 
     void Update()
@@ -21,6 +24,8 @@ public class CountDown : MonoBehaviour
         {
             // Reducir el tiempo restante
             timeRemaining -= Time.deltaTime;
+
+            // Imprimir el tiempo restante para depuración
 
             // Formatear el tiempo restante en minutos y segundos
             int minutes = Mathf.FloorToInt(timeRemaining / 60);
@@ -31,9 +36,21 @@ public class CountDown : MonoBehaviour
         }
         else
         {
-            // Llamar al otro script si el tiempo ha terminado
+            // Si el tiempo llega a 0
             countdownText.text = "00:00";  // Mostrar 00:00 cuando termine el countdown
-            //anotherScript.TriggerAction(); // Método en otro script
+
+            // Verificar que el lightController no sea null antes de intentar apagar las luces
+            if (lightController != null)
+            {
+                lightController.TurnOffLights();
+            }
+            else
+            {
+                Debug.LogWarning("No se ha asignado el controlador de luces (lightController).");
+            }
+
+            // Desactivar el contador para que no siga ejecutándose
+            this.enabled = false;
         }
     }
 }
